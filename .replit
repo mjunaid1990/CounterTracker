@@ -2,6 +2,7 @@ modules = ["flutter"]
 
 [nix]
 channel = "stable-24_05"
+packages = ["wget", "flutter"]
 
 [workflows]
 runButton = "Project"
@@ -25,7 +26,7 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "flutter pub get && flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0"
+args = "flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0"
 waitForPort = 5000
 
 [[workflows.workflow]]
@@ -37,4 +38,12 @@ task = "shell.exec"
 args = "flutter run -d web-server --web-hostname 0.0.0.0 --web-port 8080"
 
 [deployment]
-run = ["sh", "-c", "flutter pub get && flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0"]
+run = ["sh", "-c", "flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0"]
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
