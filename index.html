@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #e6f3ff, #ffffff);
+        }
+        
+        header {
+            background-color: #1976D2;
+            color: white;
+            padding: 16px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .counter-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .counter-display {
+            font-size: 80px;
+            font-weight: bold;
+            margin: 20px 0 40px;
+            transition: all 0.3s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .button-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 10px;
+        }
+        
+        .counter-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .counter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        
+        .counter-button:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+        }
+        
+        .decrease {
+            background-color: #F44336;
+        }
+        
+        .reset {
+            background-color: #9E9E9E;
+        }
+        
+        .increase {
+            background-color: #4CAF50;
+        }
+        
+        .button-label {
+            margin-top: 8px;
+            font-weight: bold;
+        }
+        
+        .decrease-label {
+            color: #F44336;
+        }
+        
+        .reset-label {
+            color: #9E9E9E;
+        }
+        
+        .increase-label {
+            color: #4CAF50;
+        }
+        
+        .message {
+            font-size: 18px;
+            font-style: italic;
+            color: #666;
+            text-align: center;
+            min-height: 27px;
+        }
+        
+        @media (max-width: 500px) {
+            .button-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .button-container {
+                margin: 10px 0;
+            }
+            
+            .counter-display {
+                font-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Flutter Counter</h1>
+    </header>
+    
+    <div class="container">
+        <div class="counter-title">Current Count:</div>
+        <div id="counter" class="counter-display">0</div>
+        
+        <div class="button-row">
+            <div class="button-container">
+                <button class="counter-button decrease" onclick="decrementCounter()">-</button>
+                <div class="button-label decrease-label">Decrease</div>
+            </div>
+            
+            <div class="button-container">
+                <button class="counter-button reset" onclick="resetCounter()">↻</button>
+                <div class="button-label reset-label">Reset</div>
+            </div>
+            
+            <div class="button-container">
+                <button class="counter-button increase" onclick="incrementCounter()">+</button>
+                <div class="button-label increase-label">Increase</div>
+            </div>
+        </div>
+        
+        <div id="message" class="message">Click '+' to start counting</div>
+    </div>
+    
+    <script>
+        let count = 0;
+        const counter = document.getElementById('counter');
+        const message = document.getElementById('message');
+        
+        function updateCounterColor() {
+            if (count > 10) {
+                counter.style.color = '#9C27B0'; // Purple
+            } else if (count > 5) {
+                counter.style.color = '#1976D2'; // Blue
+            } else if (count > 0) {
+                counter.style.color = '#4CAF50'; // Green
+            } else {
+                counter.style.color = '#9E9E9E'; // Grey
+            }
+        }
+        
+        function updateMessage() {
+            if (count >= 15) {
+                message.textContent = "Wow! You're on fire! 🔥";
+            } else if (count >= 10) {
+                message.textContent = "Great job keeping count! 👏";
+            } else if (count >= 5) {
+                message.textContent = "You're getting good at this! 😊";
+            } else if (count > 0) {
+                message.textContent = "Just starting, keep going! 👍";
+            } else {
+                message.textContent = "Click '+' to start counting";
+            }
+        }
+        
+        function animateCounter() {
+            counter.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                counter.style.transform = 'scale(1)';
+            }, 200);
+        }
+        
+        function incrementCounter() {
+            count++;
+            counter.textContent = count;
+            updateCounterColor();
+            updateMessage();
+            animateCounter();
+        }
+        
+        function decrementCounter() {
+            if (count > 0) {
+                count--;
+                counter.textContent = count;
+                updateCounterColor();
+                updateMessage();
+                animateCounter();
+            }
+        }
+        
+        function resetCounter() {
+            count = 0;
+            counter.textContent = count;
+            updateCounterColor();
+            updateMessage();
+            animateCounter();
+        }
+    </script>
+</body>
+</html>

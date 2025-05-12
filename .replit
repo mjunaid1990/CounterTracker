@@ -14,15 +14,15 @@ author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "workflow.run"
-args = "Flutter Counter App"
+args = "Counter App"
 
 [[workflows.workflow]]
-name = "Flutter Counter App"
+name = "Counter App"
 author = "agent"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "flutter run -d web-server --web-port=5000 --web-hostname=0.0.0.0 --web-renderer=html"
+args = "python -m http.server 5000 --bind 0.0.0.0"
 waitForPort = 5000
 
 [deployment]
